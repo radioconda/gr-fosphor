@@ -67,12 +67,6 @@ if(WIN32)
    add_definitions(-DENABLE_GLEW)
 endif(WIN32)
 
-if(ENABLE_PYTHON)
-    add_definitions(-DENABLE_PYTHON)
-    target_include_directories(gnuradio-fosphor PUBLIC ${PYTHON_INCLUDE_DIRS})
-    target_link_libraries(gnuradio-fosphor ${PYTHON_LIBRARY})
-endif(ENABLE_PYTHON)
-
 if(ENABLE_GLFW)
     target_include_directories(gnuradio-fosphor PUBLIC ${GLFW3_INCLUDE_DIRS})
     target_link_libraries(gnuradio-fosphor ${GLFW3_LIBRARIES})

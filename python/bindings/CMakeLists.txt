@@ -30,14 +30,12 @@ if (${name} STREQUAL gr)
     SET(MODULE_NAME "runtime")
 endif()
 
-target_include_directories(${name}_python PUBLIC
+target_include_directories(${name}_python PRIVATE
     ${CMAKE_CURRENT_BINARY_DIR}
-    ${PYTHON_NUMPY_INCLUDE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/${updir}/lib
     ${CMAKE_CURRENT_SOURCE_DIR}/${updir}/include
-    ${PYBIND11_INCLUDE_DIR}
 )
-target_link_libraries(${name}_python PUBLIC ${Boost_LIBRARIES} ${PYTHON_LIBRARIES} gnuradio-${MODULE_NAME})
+target_link_libraries(${name}_python PRIVATE ${Boost_LIBRARIES} pybind11::pybind11 Python::Module Python::NumPy gnuradio-${MODULE_NAME})
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR
    CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     target_compile_options(${name}_python PRIVATE -Wno-unused-variable) # disable warnings for docstring templates
