@@ -40,21 +40,10 @@ void bind_qt_sink_c(py::module& m)
 		)
 
 		.def("qwidget",
-			&qt_sink_c::qwidget,
-			D(qt_sink_c, qwidget)
-		)
-
-		//.def("pyqwidget",
-		//	&qt_sink_c::pyqwidget,
-		//	D(qt_sink_c, pyqwidget)
-		//)
-		// For the sip conversion to python to work, the widget object
-		// needs to be explicitly converted to long long.
-		.def("pyqwidget",
-			[](std::shared_ptr<qt_sink_c> p) {
-				return PyLong_AsLongLong(p->pyqwidget());
+			[](qt_sink_c& self) {
+					return reinterpret_cast<uintptr_t>(self.qwidget());
 				},
-			D(qt_sink_c, pyqwidget)
+			D(qt_sink_c, qwidget)
 		)
 
 		;
