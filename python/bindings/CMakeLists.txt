@@ -23,9 +23,21 @@ include(GrPybind)
 
 list(APPEND fosphor_python_files
     base_sink_c_python.cc
-    glfw_sink_c_python.cc
-    qt_sink_c_python.cc
     python_bindings.cc)
+
+if(ENABLE_GLFW)
+    add_definitions(-DENABLE_GLFW)
+    list(APPEND fosphor_python_files
+        glfw_sink_c_python.cc
+    )
+endif()
+
+if(ENABLE_QT)
+    add_definitions(-DENABLE_QT)
+    list(APPEND fosphor_python_files
+        qt_sink_c_python.cc
+    )
+endif()
 
 GR_PYBIND_MAKE(fosphor
    ../..

@@ -38,6 +38,10 @@ PYBIND11_MODULE(fosphor_python, m)
 	py::module::import("gnuradio.gr");
 
 	bind_base_sink_c(m);
+#ifdef ENABLE_GLFW
 	bind_glfw_sink_c(m);
+#endif
+#ifdef ENABLE_QT
 	bind_qt_sink_c(m);
+#endif
 }
