@@ -14,36 +14,7 @@ GR_PYTHON_CHECK_MODULE_RAW(
     PYGCCXML_FOUND
     )
 
-# Official module is broken, makes too many assumptions that are not true
-#include(GrPybind)
-
-include(GrPython)
-
-macro(GR_PYBIND_MAKE name updir filter files)
-
-configure_file(${CMAKE_SOURCE_DIR}/docs/doxygen/pydoc_macros.h ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
-
-pybind11_add_module(${name}_python ${files})
-
-SET(MODULE_NAME ${name})
-if (${name} STREQUAL gr)
-    SET(MODULE_NAME "runtime")
-endif()
-
-target_include_directories(${name}_python PRIVATE
-    ${CMAKE_CURRENT_BINARY_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/${updir}/lib
-    ${CMAKE_CURRENT_SOURCE_DIR}/${updir}/include
-)
-target_link_libraries(${name}_python PRIVATE ${Boost_LIBRARIES} pybind11::pybind11 Python::Module Python::NumPy gnuradio-${MODULE_NAME})
-if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR
-   CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    target_compile_options(${name}_python PRIVATE -Wno-unused-variable) # disable warnings for docstring templates
-endif(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR
-      CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-
-endmacro(GR_PYBIND_MAKE)
-
+include(GrPybind)
 
 
 ########################################################################
