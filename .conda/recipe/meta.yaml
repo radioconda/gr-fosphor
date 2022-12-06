@@ -1,0 +1,107 @@
+{% set oot_name = "fosphor" %}
+{% set name = "gnuradio-" + oot_name %}
+{% set version = (environ.get("GIT_DESCRIBE_TAG_PEP440", "0.0.0." + datetime.datetime.now().strftime("%Y%m%d") + ".dev+" + environ.get("GIT_DESCRIBE_HASH", "local"))|string) %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  # use local path or git repository depending on if the build is local or done on CI
+  path: "../.."  # [not os.environ.get("CI")]
+  git_url: {{ environ.get('FEEDSTOCK_ROOT', "../..") }}  # [os.environ.get("CI")]
+
+build:
+  number: 0
+
+requirements:
+  build:
+    - {{ compiler("c") }}
+    - {{ compiler("cxx") }}
+    - cmake
+    - git
+    - ninja
+    - pkg-config
+    # cross-compilation requirements
+    - python                              # [build_platform != target_platform]
+    - cross-python_{{ target_platform }}  # [build_platform != target_platform]
+    - numpy                               # [build_platform != target_platform]
+    - pybind11                            # [build_platform != target_platform]
+    # Add extra build tool dependencies here
+    - {{ cdt("mesa-libgl-devel") }}  # [linux]
+
+  host:
+    - gmp  # [linux]
+    # the following two entries are for generating builds against specific GR versions
+    - gnuradio-core  # [not gnuradio_extra_pin]
+    - gnuradio-core {{ gnuradio_extra_pin }}.*  # [gnuradio_extra_pin]
+    - pip  # [win]
+    - pybind11
+    - python
+    - numpy
+    - volk
+    # Add/remove library dependencies here
+    - boost-cpp
+    - fmt
+    - freetype
+    - glew  # [win]
+    - glfw
+    - khronos-opencl-icd-loader  # [win]
+    - ocl-icd  # [linux]
+    - qt-main  # [not ppc64le]
+    - spdlog
+
+  run:
+    - numpy
+    - python
+    # Add/remove runtime dependencies here
+    - boost-cpp
+    - {{ pin_compatible("glfw", max_pin="x") }}
+    - khronos-opencl-icd-loader  # [win]
+    - ocl-icd  # [linux]
+    - ocl-icd-system  # [linux]
+
+test:
+  commands:
+    # verify that (some) headers get installed
+    - test -f $PREFIX/include/gnuradio/{{ oot_name }}/api.h  # [not win]
+    - if not exist %PREFIX%\\Library\\include\\gnuradio\\{{ oot_name }}\\api.h exit 1  # [win]
+
+    # verify that libraries get installed
+    - test -f $PREFIX/lib/lib{{ name }}${SHLIB_EXT}  # [not win]
+    - if not exist %PREFIX%\\Library\\bin\\{{ name }}.dll exit 1  # [win]
+    - if not exist %PREFIX%\\Library\\lib\\{{ name }}.lib exit 1  # [win]
+
+    # verify that (some) GRC blocks get installed
+    {% set blocks = ["fosphor_glfw_sink_c", "fosphor_qt_sink_c",] %}  # [not ppc64le]
+    {% set blocks = ["fosphor_glfw_sink_c"] %}  # [ppc64le]
+    {% for block in blocks %}
+    - test -f $PREFIX/share/gnuradio/grc/blocks/{{ block }}.block.yml  # [not win]
+    - if not exist %PREFIX%\\Library\\share\\gnuradio\\grc\\blocks\\{{ block }}.block.yml exit 1  # [win]
+    {% endfor %}
+
+  imports:
+    # verify that the python module imports
+    - gnuradio.{{ oot_name }}
+
+about:
+  home: https://osmocom.org/projects/sdr/wiki/Fosphor
+  license: GPL-3.0-or-later
+  license_file: COPYING
+  summary: GNU Radio block for spectrum visualization using GPU
+  description: >
+    GNU Radio block for RTSA-like spectrum visualization using OpenCL and
+    OpenGL acceleration.
+
+    Note: this package does not depend on a specific OpenCL implementation
+    and will use an implementation available on your system (not installed
+    through conda) by default. If you would like to use a particular OpenCL
+    implementation, you can install one of the available conda packages::
+
+        - pocl (LLVM-based with many device targets)
+        - intel-compute-runtime (Intel Graphics)
+        - beignet (legacy Intel Graphics)
+        - oclgrind (virtual OpenCL device simulator)
+
+
+  dev_url: https://gitea.osmocom.org/sdr/gr-fosphor
