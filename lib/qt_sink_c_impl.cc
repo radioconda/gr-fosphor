@@ -94,22 +94,5 @@ qt_sink_c_impl::qwidget()
 	return dynamic_cast<QWidget*>(this->d_gui);
 }
 
-
-#ifdef ENABLE_PYTHON
-PyObject*
-qt_sink_c_impl::pyqwidget()
-{
-	PyObject *w = PyLong_FromVoidPtr((void*)dynamic_cast<QWidget*>(this->d_gui));
-	PyObject *retarg = Py_BuildValue("N", w);
-	return retarg;
-}
-#else
-void*
-qt_sink_c_impl::pyqwidget()
-{
-	return NULL;
-}
-#endif
-
   } /* namespace fosphor */
 } /* namespace gr */

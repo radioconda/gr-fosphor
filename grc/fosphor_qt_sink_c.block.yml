@@ -44,7 +44,7 @@ templates:
         fosphor.qt_sink_c()
         self.${id}.set_fft_window(${wintype})
         self.${id}.set_frequency_range(${freq_center}, ${freq_span})
-        ${win} = sip.wrapinstance(self.${id}.pyqwidget(), Qt.QWidget)
+        ${win} = sip.wrapinstance(self.${id}.qwidget(), Qt.QWidget)
         ${gui_hint() % win}
     callbacks:
     - set_fft_window(${wintype})

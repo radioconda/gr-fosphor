@@ -42,12 +42,6 @@ namespace gr {
 
       void exec_();
       QWidget* qwidget();
-
-#if defined(PY_VERSION)
-      PyObject* pyqwidget();
-#else
-      void* pyqwidget();
-#endif
     };
 
   } // namespace fosphor
