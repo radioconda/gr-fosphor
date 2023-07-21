@@ -5,6 +5,8 @@
 build_platform:
   osx_arm64: osx_64
 clone_depth: 0
+conda_build:
+  pkg_format: '2'
 github_actions:
   store_build_artifacts: true
 os_version:
