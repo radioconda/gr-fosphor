@@ -41,12 +41,12 @@ requirements:
     - numpy
     - volk
     # Add/remove library dependencies here
-    - boost-cpp
     - fmt
     - freetype
     - glew  # [win]
     - glfw
     - khronos-opencl-icd-loader  # [win]
+    - libboost-devel
     - libpng
     - ocl-icd  # [linux]
     - qt-main  # [not ppc64le]
@@ -56,7 +56,6 @@ requirements:
     - numpy
     - python
     # Add/remove runtime dependencies here
-    - boost-cpp
     - {{ pin_compatible("glfw", max_pin="x") }}
     - khronos-opencl-icd-loader  # [win]
     - ocl-icd  # [linux]
