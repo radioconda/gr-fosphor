@@ -35,6 +35,7 @@ list(APPEND fosphor_sources
 	fosphor/resource_data.c
 	fifo.cc
 	base_sink_c_impl.cc
+	overlap_cc_impl.cc
 )
 
 list_cond_append(ENABLE_GLFW fosphor_sources glfw_sink_c_impl.cc)
@@ -77,6 +78,12 @@ if(ENABLE_QT)
     target_include_directories(gnuradio-fosphor PUBLIC ${Qt5_INCLUDE_DIRS})
     target_link_libraries(gnuradio-fosphor ${Qt5_LIBRARIES})
 endif(ENABLE_QT)
+
+if(ENABLE_PNG)
+    add_definitions(-DENABLE_PNG)
+    target_include_directories(gnuradio-fosphor PRIVATE ${PNG_INCLUDE_DIRS})
+    target_link_libraries(gnuradio-fosphor ${PNG_LIBRARIES})
+endif(ENABLE_PNG)
 
 set_target_properties(gnuradio-fosphor PROPERTIES DEFINE_SYMBOL "gnuradio_fosphor_EXPORTS")
 

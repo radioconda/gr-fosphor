@@ -23,6 +23,7 @@ include(GrPybind)
 
 list(APPEND fosphor_python_files
     base_sink_c_python.cc
+    overlap_cc_python.cc
     python_bindings.cc)
 
 if(ENABLE_GLFW)
