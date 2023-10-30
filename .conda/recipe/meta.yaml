@@ -47,6 +47,7 @@ requirements:
     - glew  # [win]
     - glfw
     - khronos-opencl-icd-loader  # [win]
+    - libpng
     - ocl-icd  # [linux]
     - qt-main  # [not ppc64le]
     - spdlog
