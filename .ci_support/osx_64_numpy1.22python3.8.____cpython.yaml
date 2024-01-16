@@ -17,9 +17,11 @@ fmt:
 freetype:
 - '2'
 gnuradio_core:
-- 3.10.8
+- 3.10.9
 gnuradio_extra_pin:
 - ''
+libboost_devel:
+- '1.82'
 libpng:
 - '1.6'
 macos_machine:
@@ -39,7 +41,7 @@ spdlog:
 target_platform:
 - osx-64
 volk:
-- '3.0'
+- '3.1'
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
