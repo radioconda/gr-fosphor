@@ -11,14 +11,9 @@ cmake_config_args=(
     -DLIB_SUFFIX=""
     -DENABLE_DOXYGEN=OFF
     -DENABLE_GLFW=ON
+    -DENABLE_QT=ON
     -DENABLE_TESTING=ON
 )
-
-if [[ $target_platform != linux-ppc64le ]] ; then
-    cmake_config_args+=(
-        -DENABLE_QT=ON
-    )
-fi
 
 cmake ${CMAKE_ARGS} -G "Ninja" .. "${cmake_config_args[@]}"
 cmake --build . --config Release -- -j${CPU_COUNT}
