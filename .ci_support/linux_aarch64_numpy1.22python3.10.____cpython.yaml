@@ -4,6 +4,10 @@ c_compiler:
 - gcc
 c_compiler_version:
 - '12'
+c_stdlib:
+- sysroot
+c_stdlib_version:
+- '2.17'
 cdt_arch:
 - aarch64
 cdt_name:
@@ -17,7 +21,7 @@ cxx_compiler:
 cxx_compiler_version:
 - '12'
 docker_image:
-- quay.io/condaforge/linux-anvil-aarch64
+- quay.io/condaforge/linux-anvil-cos7-x86_64
 fmt:
 - '10'
 freetype:
@@ -25,7 +29,7 @@ freetype:
 gmp:
 - '6'
 gnuradio_core:
-- 3.10.9
+- 3.10.10
 gnuradio_extra_pin:
 - ''
 libboost_devel:
@@ -51,5 +55,7 @@ volk:
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
+- - c_stdlib_version
+  - cdt_name
 - - python
   - numpy

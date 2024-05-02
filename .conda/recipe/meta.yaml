@@ -17,6 +17,7 @@ build:
 requirements:
   build:
     - {{ compiler("c") }}
+    - {{ stdlib("c") }}
     - {{ compiler("cxx") }}
     - cmake
     - git
@@ -49,7 +50,7 @@ requirements:
     - libboost-devel
     - libpng
     - ocl-icd  # [linux]
-    - qt-main  # [not ppc64le]
+    - qt-main
     - spdlog
 
   run:
