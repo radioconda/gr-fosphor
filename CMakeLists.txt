@@ -215,6 +215,11 @@ endif(ENABLE_PYTHON)
 
 add_subdirectory(docs)
 
+
+install(FILES MANIFEST.yml
+    RENAME MANIFEST-${VERSION_MAJOR}.${VERSION_API}.${VERSION_ABI}${VERSION_PATCH}.yml
+    DESTINATION share/gnuradio/manifests/fosphor)
+
 ########################################################################
 # Print Summary
 ########################################################################
