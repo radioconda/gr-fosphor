@@ -130,7 +130,7 @@ if (Qt5_FOUND)
        endforeach(module)
 endif (Qt5_FOUND)
 
-find_package(PNG 1.6.19)
+find_package(PNG)
 
 ########################################################################
 # Find gnuradio build dependencies
