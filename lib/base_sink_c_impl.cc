@@ -85,7 +85,7 @@ void base_sink_c_impl::worker()
 #ifdef ENABLE_GLEW
 	GLenum glew_err = glewInit();
 	if (glew_err != GLEW_OK) {
-		GR_LOG_ERROR(d_logger, boost::format("GLEW initialization error : %s") % glewGetErrorString(glew_err));
+		d_logger->error("GLEW initialization error : {}", reinterpret_cast<const char*>(glewGetErrorString(glew_err)));
 		goto error;
 	}
 #endif
@@ -98,7 +98,7 @@ void base_sink_c_impl::worker()
 
 		this->d_fosphor = fosphor_init();
 		if (!this->d_fosphor) {
-			GR_LOG_ERROR(d_logger, "Failed to initialize fosphor");
+			d_logger->error("Failed to initialize fosphor");
 			goto error;
 		}
 	}
